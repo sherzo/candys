@@ -14,3 +14,21 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/logout', 'Auth\AuthController@logout');
+
+Route::group(['prefix' => '/', 'middleware' => 'guest', 'namespace' => 'Auth'], function() {
+	/*
+	|	RUTAS ANTES DE INICIAR SESIÓN NO MANDA ERROR 404
+	|
+	*/
+	Route::post('login', 'AuthController@login');
+});
+
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){ 
+
+	Route::resource('/', 'HomeController@index');
+	Route::resource('propiertarios', 'PropietaryController');
+
+	});
