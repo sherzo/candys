@@ -8,6 +8,9 @@
 <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/datepicker3.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/bootstrap-table.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
 
 <!--Icons-->
 <script src="{{ asset('assets/js/lumino.glyphs.js') }}"></script>
@@ -16,7 +19,11 @@
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
 <![endif]-->
-
+<style type="text/css">
+    .g-2x{
+        font-size: 18px;
+    }
+</style>
 </head>
 <body id="app-layout">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -46,21 +53,40 @@
                             
         </div><!-- /.container-fluid -->
     </nav>
+@if(!Auth::guest())
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <ul class="nav menu">
             <li class="active"><a href="{{ url('/admin') }}"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Inicio</a></li>
             <li><a href="{{ url('admin/propietarios') }}"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>Propietarios</a></li>
-            <li><a href="{{ url('admin/recibos')}}"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></use></svg>Recibo</a></li>
+            <li><a href="{{ url('admin/recibos')}}"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></use></svg>Recibos</a></li>
         </ul>
     </div><!--/.sidebar-->
+@endif
 
-    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">   
+@if(!Auth::guest())
+    <div class="col-sm-9 col-sm-offset-3 
+    col-lg-10 col-lg-offset-2 main">   
+@endif
     @yield('content')
+@if(!Auth::guest())    
     </div>
+@endif
 
     <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/chosen/chosen.jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap-table.js') }}"></script>
+
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $('div.alert').not('.alert-important').delay(4100).fadeOut(350);
+    </script>
+
+@yield('js')
 </body>
 </html>

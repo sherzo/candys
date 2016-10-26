@@ -29,6 +29,10 @@ Route::group(['prefix' => '/', 'middleware' => 'guest', 'namespace' => 'Auth'], 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){ 
 
 	Route::resource('/', 'HomeController@index');
-	Route::resource('propiertarios', 'PropietaryController');
+	Route::resource('propietarios', 'PropietarioController');
+	Route::get('propietarios/{id}/destroy', [
+		'uses' => 'PropietarioController@destroy',
+		'as' => 'admin.propietarios.destroy'
+		]);
 
 	});

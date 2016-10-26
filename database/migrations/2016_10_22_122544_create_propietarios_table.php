@@ -16,7 +16,7 @@ class CreatePropietariosTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('codigo');
+            $table->string('operadora');
             $table->string('telefono');
             $table->timestamps();
         });

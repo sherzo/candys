@@ -12,7 +12,7 @@ class CreatePropietarioApartamento extends Migration
      */
     public function up()
     {
-        Schema::create('propiertario_apartamento', function (Blueprint $table) {
+        Schema::create('propietario_apartamento', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('propietario_id')->unsigned();
             $table->foreign('propietario_id')->references('id')->on('propietarios')->onDelete('Cascade');
@@ -29,6 +29,6 @@ class CreatePropietarioApartamento extends Migration
      */
     public function down()
     {
-        Schema::drop('propiertario_apartamento');
+        Schema::drop('propietario_apartamento');
     }
 }
