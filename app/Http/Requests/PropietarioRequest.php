@@ -26,7 +26,6 @@ class PropietarioRequest extends Request
         return [
             'nombre' => 'required',
             'apellido' => 'required',
-            'telefono' => 'required',
             'apartamentos'=> 'required',
         ];
     }

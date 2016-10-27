@@ -28,7 +28,7 @@
 				    </div>
 				@endif
 				
-				{!! Form::model($propietario, ['route' => ['admin.propietarios.update', $propietario], 'method' => 'PUT', $propietario]) !!}
+				{!! Form::model($propietario, ['route' => ['admin.propietarios.update', $propietario], 'method' => 'PUT']) !!}
 					
 					@include('admin.propietarios.partials.fields-edit')
 				

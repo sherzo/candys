@@ -13,12 +13,17 @@
 		</div>
 	</div>
 	<div class="row">
+	@if (session()->has('flash_notification.message'))
+	<br>
+	@endif
 		<div class="col-lg-12">
 			 @include('flash::message')
 		</div>
 	</div>
 	<div class="row">
+	@if (!session()->has('flash_notification.message'))
 	<br>
+	@endif
 		<div class="col-lg-12">
 			@include('admin.propietarios.partials.table')
 		</div>

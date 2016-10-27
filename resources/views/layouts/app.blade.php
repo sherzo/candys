@@ -56,9 +56,19 @@
 @if(!Auth::guest())
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <ul class="nav menu">
-            <li class="active"><a href="{{ url('/admin') }}"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Inicio</a></li>
-            <li><a href="{{ url('admin/propietarios') }}"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>Propietarios</a></li>
-            <li><a href="{{ url('admin/recibos')}}"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></use></svg>Recibos</a></li>
+            <li class="active">
+                <a href="{{ url('/admin') }}">
+                    <span class="glyphicon glyphicon-home"></span>Inicio
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('admin/propietarios') }}"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>Propietarios
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('admin/gastos') }}"><span class="glyphicon glyphicon-usd"></span>Gastos</a>
+            </li>
+            <li><a href="{{ url('admin/recibos')}}"><span class="glyphicon glyphicon-list-alt"></span>Recibos</a></li>
         </ul>
     </div><!--/.sidebar-->
 @endif

@@ -14,7 +14,7 @@
 	{!! Form::label('telefono', 'Telefono') !!}
 
 	<div class="form-inline">
-		{!! Form::select('operadora', array('0412' => '0412', '0424' => '0424', '0416' => '0416', '0414' => '0414', '0426' => '0426'), null, ['class' => 'form-control']) !!}
+		{!! Form::select('operadora', array('' => '----', '0412' => '0412', '0424' => '0424', '0416' => '0416', '0414' => '0414', '0426' => '0426'), null, ['class' => 'form-control']) !!}
 		
 		{!! Form::text('telefono', null, ['class' => 'form-control awesome', 'title' => 'Introduzca su número de teléfono', 'maxlength' => '7']) !!}
 	</div>
