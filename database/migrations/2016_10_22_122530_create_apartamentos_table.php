@@ -15,7 +15,7 @@ class CreateApartamentosTable extends Migration
         Schema::create('apartamentos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('numero');
-            $table->string('estatus')->default('Libre');
+            $table->string('estatus')->default('Ocupado');
             $table->timestamps();
         });
     }

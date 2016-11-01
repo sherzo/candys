@@ -35,9 +35,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as' => 'admin.propietarios.destroy'
 		]);
 	Route::resource('gastos', 'GastoController');
-	Route::get('gasto/{id}/destroy', [
-		'uses' => 'GastoController@destroy',
-		'as' => 'admin.gastos.destroy'
-		]);
-
+	Route::resource('recibos', 'ReciboController');
+	
 	});

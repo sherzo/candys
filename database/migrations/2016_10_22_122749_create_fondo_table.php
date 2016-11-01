@@ -14,7 +14,8 @@ class CreateFondoTable extends Migration
     {
         Schema::create('fondo', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fondo');
+            $table->string('reserva');
+            $table->string('real');
             $table->timestamps();
         });
     }
