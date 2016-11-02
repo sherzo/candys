@@ -5,18 +5,26 @@
 		
 		<table data-toggle="table" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 			<thead>
-				<th data-field="nombre" data-sortable="true">Mes</th>
-				<th data-field="telefono" data-sortable="true">Subtotal</th>
-				<th data-field="apartamento" data-sortable="true">Total</th>
+				<th data-field="mas" data-sortable="true">Mes</th>
+				<th data-field="subtotal" data-sortable="true">Subtotal</th>
+				<th data-field="fondo" data-sortable="true">Fondo de reserva</th>
+				<th data-field="total" data-sortable="true">Total</th>
+				<th data-field="cuota" data-sortable="true">Cuota</th>
 				<th data-field="acciones" data-sortable="true">acciones</th>
 			</thead>
 			<tbody>
 			@foreach($recibos as $recibo)
 				<tr>
-					<td>{{ $recibo->created_at }}</td>
+					<td>{{ $recibo->mes }}</td>
 					<td>{{ $recibo->subtotal }}</td>
+					<td>{{ $recibo->fondo }}</td>
 					<td>{{ $recibo->total }}</td>
-					<td></td>
+					<td>{{ $recibo->cuota }}</td>
+					<td>
+						<a href="{{ route('admin.recibos.edit', $recibo->id) }}" class="btn btn-default btn-xs"  data-toggle="tooltip" data-placement="top" title="Imprimir" data-original-title="">
+								<span class="glyphicon glyphicon-print g-2x"></span>
+						</a>
+					</td>
 				</tr>
 			@endforeach
 			</tbody>

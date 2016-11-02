@@ -14,8 +14,12 @@ class CreateRecibosTable extends Migration
     {
         Schema::create('recibos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('mes');
             $table->string('subtotal');
+            $table->string('fondo');  
             $table->string('total');
+            $table->string('cuota');
+            $table->text('observaciones');
             $table->timestamps();
         });
     }

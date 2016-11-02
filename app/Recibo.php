@@ -14,5 +14,16 @@ class Recibo extends Model
 
     protected $table = 'recibos';
 
-    protected $fillable = ['subtotal', 'total'];
+    protected $fillable = ['mes', 'subtotal', 'fondo', 'total', 'cuota', 'observaciones'];
+
+
+    public function gastos()
+    {
+        return $this->belongsToMany('App\Gasto');
+    }
+
+    public function gastos_extra()
+    {
+        return $this->belongsToMany('App\Gasto_extra', 'gasto_extra_recibo');
+    }
 }

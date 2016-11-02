@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Fondo;
 use App\Gasto;
+use App\Gasto_extra;
 use App\Http\Requests;
 use App\Recibo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
 
 class ReciboController extends Controller
 {
@@ -52,7 +55,8 @@ class ReciboController extends Controller
         }
 
         $gastos = Gasto::all();
-        return view('admin.recibos.create', compact('gastos', 'month'));
+        $fondo = Fondo::find(1);
+        return view('admin.recibos.create', compact('gastos', 'month', 'fondo'));
     }
 
     /**
@@ -63,7 +67,99 @@ class ReciboController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $recibo = new Recibo($request->all());
+        $subtotal = 0;
+        $total = 0;
+        $fondo = 0;
+        $cuota = 0;
+        
+        foreach ($request->gastos_id as $key => $gasto) {
+            
+            $subtotal = $request->importe[$key] + $subtotal;
+        
+        }
+
+        if($request->gasto_extra){
+            
+            foreach ($request->gasto_extra as $key => $value) {
+
+                $subtotal = $request->importe_extra[$key] + $subtotal;     
+            }
+        }
+
+        
+        
+        if($request->operacion){
+
+            if ($request->operacion == 1) {
+
+                $fondo = ($subtotal * $request->valor) / 100;
+                $total = $subtotal + $fondo;
+                $cuota = $total / 44;
+                
+
+            }else if ($request->operacion == 2) {
+
+                $fondo = ($subtotal * $request->valor) / 100;
+                $total = $subtotal - $fondo;
+                $cuota = $total / 44;
+                
+                
+            }else if($request->operacion == 3){
+                
+                $fondo = $request->valor;
+                $total = $subtotal + $fondo;
+                $cuota = $total / 44;
+    
+            }else if($request->operacion == 4){
+
+                $fondo = $request->valor;
+                $total = $subtotal - $fondo;
+                $cuota = $total / 44;
+            
+            }
+
+            $recibo->subtotal = round($subtotal, 2);
+            $recibo->fondo = round($fondo, 2);
+            $recibo->total = round($total, 2);
+            $recibo->cuota = round($cuota, 2);
+
+        }else{
+
+            $recibo->subtotal = round($subtotal, 2);
+            $recibo->fondo = 0;
+            $recibo->total = round($subtotal, 2);
+            $cuota = $subtotal / 44;
+            $recibo->cuota = round($cuota, 2);
+
+        }
+
+        $recibo->save();
+
+        foreach ($request->gastos_id as $key => $gasto) {
+            
+            $recibo->gastos()->attach([$gasto => ['importe' => $request->importe[$key]]]);
+
+        }
+
+        if ($request->gasto_extra) {
+           
+           foreach ($request->gasto_extra as $key => $gasto) {
+                
+                $gasto_extra = new Gasto_extra();
+                $gasto_extra->gasto_extra = $gasto;
+                $gasto_extra->save();
+
+                $recibo->gastos_extra()->attach([$gasto_extra->id => ['importe' => $request->importe_extra[$key]]]);
+
+            }
+        }
+        
+
+        Flash::success('<strong>¡Perfecto!</strong> Se creo en recibo del mes de <strong>'.$recibo->mes.'</strong>');
+
+        return redirect('admin/recibos');
+
     }
 
     /**

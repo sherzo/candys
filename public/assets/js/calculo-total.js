@@ -62,13 +62,19 @@ $('.importe').focusout(function() {
 
 				var importe_fondo = importe_s * (valor / 100);
 				var cuota_fondo = importe_fondo / 44;
-				$('#importe_fondo').val('- '+importe_fondo.toFixed(2));
-				$('#cuota_fondo').val('- '+cuota_fondo.toFixed(2))
-				importe_t = parseFloat(importe_s) - parseFloat(importe_fondo);
-				$('#importe_t').val(importe_t.toFixed(2));
-				var cuota_t = parseFloat(importe_t) / 44;
-				$('#cuota_t').val(cuota_t.toFixed(2));
-
+					if(parseFloat(importe_fondo) >= parseFloat($('#fondo_real').val())){
+						$('#importe_fondo').val('- '+importe_fondo.toFixed(2));
+						$('#cuota_fondo').val('- '+cuota_fondo.toFixed(2))
+						importe_t = parseFloat(importe_s) - parseFloat(importe_fondo);
+						$('#importe_t').val(importe_t.toFixed(2));
+						var cuota_t = parseFloat(importe_t) / 44;
+						$('#cuota_t').val(cuota_t.toFixed(2));
+					}else {
+						console.log('h0');
+						$('.alert').attr('class', 'show');
+						$('alert').html('<strong>¡Cuidado!</strong> El monto a'+
+						' descontar es mayor al real disponible');
+					}
 			}else if(option == '3'){
 
 				var importe_fondo = valor;
@@ -190,7 +196,7 @@ $('#valor').focusout(function(){
 
 			}else if (option == '2') {
 
-				console.log('hi')
+				
 				var importe_fondo = importe_s * (valor / 100);
 				var cuota_fondo = importe_fondo / 44;
 				$('#importe_fondo').val('- '+importe_fondo.toFixed(2));
@@ -200,6 +206,7 @@ $('#valor').focusout(function(){
 				var cuota_t = parseFloat(importe_t) / 44;
 				$('#cuota_t').val(cuota_t.toFixed(2));
 
+
 			}else if(option == '3'){
 				if(valor == ''){
 					$('#importe_fondo').val(0);
@@ -207,6 +214,8 @@ $('#valor').focusout(function(){
 					$('#importe_t').val(0);
 					$('#cuota_t').val(0);
 				}else{
+					
+					
 					var importe_fondo = valor;
 					var cuota_fondo = parseFloat(importe_fondo) / 44;
 					$('#importe_fondo').val(parseFloat(importe_fondo).toFixed(2));
@@ -215,6 +224,7 @@ $('#valor').focusout(function(){
 					$('#importe_t').val(importe_t.toFixed(2));
 					var cuota_t = parseFloat(importe_t) / 44;
 					$('#cuota_t').val(cuota_t.toFixed(2));
+					
 				}
 			}else if(option == '4'){
 				if(valor == ''){
@@ -223,7 +233,9 @@ $('#valor').focusout(function(){
 					$('#importe_t').val(0);
 					$('#cuota_t').val(0);
 				}else{
+
 				var importe_fondo = valor;
+				
 				var cuota_fondo = importe_fondo / 44;
 				$('#importe_fondo').val('- '+importe_fondo);
 				$('#cuota_fondo').val('- '+cuota_fondo.toFixed(2))
@@ -232,6 +244,7 @@ $('#valor').focusout(function(){
 				$('#importe_t').val(importe_t.toFixed(2));
 				var cuota_t = parseFloat(importe_t) / 44;
 				$('#cuota_t').val(cuota_t.toFixed(2));
+			
 				}
 			}
 

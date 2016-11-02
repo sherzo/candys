@@ -8,7 +8,10 @@
 	<tbody id="gastos">
 		@foreach($gastos as $gasto)
 			<tr>
-				<td>{{ $gasto->gasto }}</td>
+				<td>{{ $gasto->gasto }}
+					
+					<input type="hidden" name="gastos_id[]" value="{{ $gasto->id }}">
+				</td>
 				<td>
 					<div class="input-group">
 						{!! Form::text('importe[]', null, ['class' => 'form-control input-sm importe', 'data' => $gasto->id, 'required', 'size' => '8'])!!}

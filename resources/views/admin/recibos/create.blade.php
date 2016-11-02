@@ -9,17 +9,21 @@
 				<li class="active">Nuevo</li>
 			</ol>
 		</div><!--/.row-->
-	<form action="intro.php">
+
 	
 		<div class="row"><br>
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">Recibo del mes de: <strong>{{ $month }}</strong>
 					</div>
+
+					{!! Form::open(['route' => 'admin.recibos.store', 'method' => 'POST']) !!}
 					<div class="panel-body">
-					
+					{!! Form::hidden('mes', $month) !!}
 						@include('admin.recibos.partials.table-recibo')
 						<br>
+						<div class="col-md-12 alert alert-danger hide">
+						</div>
 						<div class="form-group">
 							{!! Form::label('observaciones', 'Oberservaciones') !!}
 
@@ -28,6 +32,7 @@
 
 						<button class="btn btn-primary btn-sm">Crear Recibo</button>
 					</div>
+					{!! Form::close() !!}
 				</div>
 			</div>
 		</div>
