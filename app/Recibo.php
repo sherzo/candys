@@ -14,16 +14,16 @@ class Recibo extends Model
 
     protected $table = 'recibos';
 
-    protected $fillable = ['mes', 'subtotal', 'fondo', 'total', 'cuota', 'observaciones'];
+    protected $fillable = ['mes', 'anio','subtotal', 'fondo', 'porcentaje', 'operacion', 'total', 'cuota', 'observaciones'];
 
 
     public function gastos()
     {
-        return $this->belongsToMany('App\Gasto');
+        return $this->belongsToMany('App\Gasto')->withPivot('importe');
     }
 
     public function gastos_extra()
     {
-        return $this->belongsToMany('App\Gasto_extra', 'gasto_extra_recibo');
+        return $this->belongsToMany('App\Gasto_extra', 'gasto_extra_recibo')->withPivot('importe');
     }
 }

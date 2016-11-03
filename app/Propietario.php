@@ -22,4 +22,11 @@ class Propietario extends Model
         return $this->belongsToMany('App\Apartamento', 'propietario_apartamento');
     }
 
+    public function recibos()
+    {
+        return $this->belongsToMany('App\Recibo', 'propietario_recibo')->withPivot('status', 'interes_mora');
+    }
+
+
+
 }

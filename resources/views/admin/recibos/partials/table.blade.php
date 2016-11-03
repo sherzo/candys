@@ -21,9 +21,19 @@
 					<td>{{ $recibo->total }}</td>
 					<td>{{ $recibo->cuota }}</td>
 					<td>
-						<a href="{{ route('admin.recibos.edit', $recibo->id) }}" class="btn btn-default btn-xs"  data-toggle="tooltip" data-placement="top" title="Imprimir" data-original-title="">
+						<a href="{{ route('admin.recibos.show', $recibo->id) }}" class="btn btn-default btn-xs"  data-toggle="tooltip" data-placement="top" title="Imprimir" data-original-title="">
+								<span class="glyphicon glyphicon-eye-open g-2x"></span>
+						</a>
+						
+						<a href="{{ route('admin.prueba', $recibo->id) }}" class="btn btn-default btn-xs"  data-toggle="tooltip" data-placement="top" title="Imprimir" data-original-title="">
 								<span class="glyphicon glyphicon-print g-2x"></span>
 						</a>
+
+						<a href="{{ route('admin.pdf', $recibo->id) }}" class="btn btn-default btn-xs"  data-toggle="tooltip" data-placement="top" title="Descargar PDF" data-original-title="">
+								<span class="glyphicon glyphicon-save  g-2x"></span>
+						</a>
+
+						
 					</td>
 				</tr>
 			@endforeach

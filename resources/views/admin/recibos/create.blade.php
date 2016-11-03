@@ -20,6 +20,8 @@
 					{!! Form::open(['route' => 'admin.recibos.store', 'method' => 'POST']) !!}
 					<div class="panel-body">
 					{!! Form::hidden('mes', $month) !!}
+					{!! Form::hidden('anio', $year) !!}
+
 						@include('admin.recibos.partials.table-recibo')
 						<br>
 						<div class="col-md-12 alert alert-danger hide">

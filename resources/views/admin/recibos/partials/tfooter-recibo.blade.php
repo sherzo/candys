@@ -26,7 +26,7 @@
 			actual: 
 			<div class="input-group">
 
-			<input type="text" value="{{ $fondo->real }}" class="form-control input-sm" size="2" disabled id="fondo_real">
+			<input type="text" value="{{ $fondo->real ? $fondo->real : '0'  }}" class="form-control input-sm" size="2" disabled id="fondo_real">
 			
 			<span class="input-group-addon">bs</span>
 			</div>
@@ -37,11 +37,15 @@
 				<option value="">seleccione</option>
 				<optgroup label="Por (%)">
 				<option value="1">Recaudo</option>
+				@if($fondo->real != '0')
 				<option value="2">Descuento</option>
+				@endif
 				</optgroup>
 				<optgroup label="Por (bs)">
 				<option value="3">Recaudo</option>
+				@if($fondo->real != '0')
 				<option value="4">Descuento</option>
+				@endif
 				</optgroup>
 			</select>
 

@@ -19,6 +19,7 @@ class CreatePropietarioReciboTable extends Migration
             $table->integer('recibo_id')->unsigned();
             $table->foreign('recibo_id')->references('id')->on('recibos')->onDelete('Cascade');
             $table->string('status')->default('Por pagar');
+            $table->string('interes_mora');
             $table->timestamps();
         });
     }

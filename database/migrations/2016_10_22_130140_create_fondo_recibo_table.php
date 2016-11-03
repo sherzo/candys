@@ -18,8 +18,6 @@ class CreateFondoReciboTable extends Migration
             $table->foreign('fondo_id')->references('id')->on('fondo')->onDelete('Cascade');
             $table->integer('recibo_id')->unsigned();
             $table->foreign('recibo_id')->references('id')->on('recibos')->onDelete('Cascade');
-            $table->string('operaccion');
-            $table->string('importe');
             $table->timestamps();
         });
     }
