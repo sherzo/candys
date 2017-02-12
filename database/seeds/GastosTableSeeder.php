@@ -24,6 +24,10 @@ class GastosTableSeeder extends Seeder
         ));
 
         \DB::table('gastos')->insert(array (
+            'gasto'     => 'Consumo portón electrico principal',
+        ));
+
+        \DB::table('gastos')->insert(array (
             'gasto'     => 'Salario  trabajador residendial',
         ));
 
@@ -48,7 +52,7 @@ class GastosTableSeeder extends Seeder
         ));
 
         \DB::table('gastos')->insert(array (
-            'gasto'     => '50 bolsas',
+            'gasto'     => 'Bolsas negras',
         ));
 
         \DB::table('gastos')->insert(array (

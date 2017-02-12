@@ -10,7 +10,7 @@ class Propietario extends Model
     * The attributes that are mass assignable.
     *
     * @var array
-    */ 
+    */
 
     protected $table = 'propietarios';
 
@@ -24,8 +24,9 @@ class Propietario extends Model
 
     public function recibos()
     {
-        return $this->belongsToMany('App\Recibo', 'propietario_recibo')->withPivot('status', 'interes_mora');
+        return $this->belongsToMany('App\Recibo', 'propietario_recibo')->withPivot('estatus', 'mora');
     }
+
 
 
 

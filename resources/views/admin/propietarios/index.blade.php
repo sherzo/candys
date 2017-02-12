@@ -10,6 +10,8 @@
 	<div class="row"><br>
 		<div class="col-lg-12">
 			<a href="{{ url('admin/propietarios/create')}}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Nuevo</a>
+
+			<a href="{{ url('admin/propietarios/morosos') }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-time"></span> Morosos</a>
 		</div>
 	</div>
 	<div class="row">

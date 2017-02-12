@@ -31,11 +31,10 @@ class PropietarioRequest extends Request
     }
 
     public function messages()
-    {   
+    {
         return [
             'nombre.required' => 'Ingrese el nombre del propietario',
             'apellido.required'  => 'Ingrese el apellido del propietario',
-            'telefono.required'  => 'Ingrese el telefono del propietario',
             'apartamentos.required'  => 'Olvido seleccionar el apartamento',
         ];
     }

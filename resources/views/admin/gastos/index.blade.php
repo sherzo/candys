@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	
+
 	<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="{{ url('admin') }}"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
@@ -20,7 +20,7 @@
 			@if(isset($gastoedit))
 
 				{!! Form::model($gastoedit,['route' => ['admin.gastos.update', $gastoedit], 'method' => 'PUT', 'class' => 'form-inline']) !!}
-					
+
 					@include('admin.gastos.partials.fields')
 
 				{!!Form::close() !!}
@@ -43,9 +43,9 @@
 			@include('admin.gastos.partials.table')
 		</div>
 	</div>
-	
+
 @endsection
 
 @section('js')
-
+<script src="{{ asset('assets/js/actualizar-gasto.js') }}"></script>
 @endsection

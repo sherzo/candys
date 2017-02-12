@@ -18,7 +18,8 @@ class CreateGastoReciboTable extends Migration
             $table->foreign('gasto_id')->references('id')->on('gastos')->onDelete('Cascade');
             $table->integer('recibo_id')->unsigned();
             $table->foreign('recibo_id')->references('id')->on('recibos')->onDelete('Cascade');
-            $table->string('importe');
+            $table->float('importe');
+            $table->boolean('estatus')->default(true);
             $table->timestamps();
         });
     }

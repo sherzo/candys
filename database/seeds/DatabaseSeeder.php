@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
          $this->call(ApartamentosTableSeeder::class);
          $this->call(GastosTableSeeder::class);
          $this->call(PropietariosTableSeeder::class);
-
+         $this->call(FondoTableSeeder::class);
+         $this->call(SaldoTableSeeder::class);
+         $this->call(PrestacionesTableSeeder::class);
     }
 }

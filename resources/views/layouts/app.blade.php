@@ -7,11 +7,15 @@
 
 <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/datepicker3.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <link href="{{ asset('assets/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/bootstrap-table.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
-
+<style>
+.ui-datepicker-calendar {
+    display: none;
+    }
+</style>
 <!--Icons-->
 <script src="{{ asset('assets/js/lumino.glyphs.js') }}"></script>
 
@@ -19,11 +23,6 @@
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
 <![endif]-->
-<style type="text/css">
-    .g-2x{
-        font-size: 18px;
-    }
-</style>
 </head>
 <body id="app-layout">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -42,15 +41,15 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked female user"><use xlink:href="#stroked-female-user"/></svg>
                         {{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
-                            <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-                            <li><a href="{{ url('logout')}}"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+                            <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Perfil</a></li>
+                            <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Configuraciones</a></li>
+                            <li><a href="{{ url('logout')}}"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Salir</a></li>
                         </ul>
                     </li>
                 @endif
                 </ul>
             </div>
-                            
+
         </div><!-- /.container-fluid -->
     </nav>
 @if(!Auth::guest())
@@ -69,16 +68,19 @@
                 <a href="{{ url('admin/gastos') }}"><span class="glyphicon glyphicon-usd"></span>Gastos</a>
             </li>
             <li><a href="{{ url('admin/recibos')}}"><span class="glyphicon glyphicon-list-alt"></span>Recibos</a></li>
+            <li><a href="{{ url('admin/consultas') }}"><span class="glyphicon glyphicon-search"></span>Consultas</a></li>
         </ul>
     </div><!--/.sidebar-->
 @endif
 
 @if(!Auth::guest())
-    <div class="col-sm-9 col-sm-offset-3 
-    col-lg-10 col-lg-offset-2 main">   
+    <div class="col-sm-9 col-sm-offset-3
+    col-lg-10 col-lg-offset-2 main">
 @endif
+
     @yield('content')
-@if(!Auth::guest())    
+
+@if(!Auth::guest())
     </div>
 @endif
 
@@ -87,15 +89,17 @@
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/chosen/chosen.jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-table.js') }}"></script>
+    <script src="{{ asset('assets/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+    <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $('div.alert').not('.alert-important').delay(4100).fadeOut(350);
+    </script>
 
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
 
-        $('div.alert').not('.alert-important').delay(4100).fadeOut(350);
-    </script>
 
 @yield('js')
 </body>

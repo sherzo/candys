@@ -19,10 +19,13 @@ class CreateRecibosTable extends Migration
             $table->string('subtotal');
             $table->string('fondo');
             $table->string('porcentaje')->default('');
-            $table->string('operacion');  
+            $table->string('operacion');
             $table->string('total');
+            $table->string('subcuota')->default(0);
+            $table->string('cuota_fondo')->default(0);
             $table->string('cuota');
             $table->text('observaciones');
+            $table->boolean('editar')->default(true);
             $table->timestamps();
         });
     }

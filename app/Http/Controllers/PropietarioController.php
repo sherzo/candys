@@ -6,6 +6,11 @@ use App\Apartamento;
 use App\Http\Requests;
 use App\Http\Requests\PropietarioRequest;
 use App\Propietario;
+use App\Recibo;
+use App\Movimiento;
+use App\Saldo;
+use App\Fondo;
+use App\Movimiento_fondo;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Validator;
@@ -18,7 +23,7 @@ class PropietarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $propietarios = Propietario::all();
 
         $propietarios->each(function($propietarios){
@@ -34,9 +39,9 @@ class PropietarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $apartamentos = Apartamento::where('estatus', 'Libre')->lists('numero', 'id');
-        
+
         return view('admin.propietarios.create', compact('apartamentos'));
     }
 
@@ -47,7 +52,7 @@ class PropietarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(PropietarioRequest $request)
-    {   
+    {
         $propietario = new Propietario($request->all());
         $propietario->save();
 
@@ -56,15 +61,55 @@ class PropietarioController extends Controller
             $propietario->apartamentos()->attach([$apartamento]);
             $apartamento = Apartamento::find($apartamento);
             $apartamento->estatus = 'Ocupado';
-            $apartamento->save();    
-        
+            $apartamento->save();
+
         }
 
         Flash::success('<strong>¡Perfecto!</strong> Se registro el propietario <strong>'.$propietario->nombre.'</strong>');
 
         return redirect('admin/propietarios');
-        
+
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+     public function payment($propietario_id, $recibo_id)
+     {
+       $propietario = Propietario::find($propietario_id);
+       $recibo = $propietario->recibos()->where('recibo_id', $recibo_id)->get();
+       $recibo[0]->pivot->estatus = false;
+       $recibo[0]->editar = false;
+       $recibo[0]->save();
+
+       $movimiento = new Movimiento();
+       $movimiento->transaccion = 'Pago del recibo de '.$recibo[0]->mes.'-'.$recibo[0]->anio.' del apartamento '.$propietario->apartamentos[0]->numero;
+       $movimiento->monto = $recibo[0]->pivot->mora ? $recibo[0]->subcuota + ($recibo[0]->cuota * 0.10) : $recibo[0]->subcuota;
+       $saldo = Saldo::find(1);
+       $movimiento->saldo = $saldo->saldo + $movimiento->monto;
+       $saldo->saldo = $saldo->saldo + $movimiento->monto;
+       $movimiento->save();
+       $saldo->save();
+       $recibo[0]->pivot->save();
+
+       if($recibo[0]->operacion == '+')
+       {
+         $fondo = Fondo::find(1);
+         $movimiento_fondo = new Movimiento_fondo();
+         $movimiento_fondo->transaccion = 'Pago del recibo de '.$recibo[0]->mes.'-'.$recibo[0]->anio.' del apartamento '.$propietario->apartamentos[0]->numero;
+         $movimiento_fondo->monto = $recibo[0]->cuota_fondo;
+         $movimiento_fondo->saldo_fondo = $fondo->real + $recibo[0]->cuota_fondo;
+         $movimiento_fondo->save();
+         $fondo->real = $fondo->real + $recibo[0]->cuota_fondo;
+         $fondo->save();
+       }
+
+       Flash::success('<strong>¡Perfecto!</strong> Se registo el pago del recibo');
+       return redirect()->back();
+      }
 
     /**
      * Display the specified resource.
@@ -99,11 +144,10 @@ class PropietarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
             'apellido' => 'required',
-            'telefono' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -120,6 +164,16 @@ class PropietarioController extends Controller
         Flash::success('<strong>¡Perfecto!</strong> El propietario: <strong>'. $propietario->nombre. '</strong> se modifico correctamente');
 
         return redirect()->back();
+    }
+
+    public function morosos()
+    {
+      $propietarios = Propietario::all();
+      $propietarios->each(function($propietarios){
+        $propietarios->recibos;
+      });
+      return view('admin.propietarios.morosos', compact('propietarios'));
+
     }
 
     /**
@@ -146,4 +200,5 @@ class PropietarioController extends Controller
 
         return redirect()->back();
     }
+
 }

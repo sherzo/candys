@@ -1,5 +1,5 @@
 <tr>
-	<th align="left"> 
+	<th align="left">
 		Subtotal
 	</th>
 	<th>
@@ -12,7 +12,7 @@
 	<th>
 		<div class="input-group">
 			<input type="text" name="" id="cuota_s" disabled="" class="form-control input-sm" value="0" size="8">
-		
+
 			<span class="input-group-addon">bs</span>
 		</div>
 		</th>
@@ -23,29 +23,20 @@
 	<th>
 		<div class="form-inline">
 			Fondo de reserva
-			actual: 
+			actual:
 			<div class="input-group">
 
 			<input type="text" value="{{ $fondo->real ? $fondo->real : '0'  }}" class="form-control input-sm" size="2" disabled id="fondo_real">
-			
+
 			<span class="input-group-addon">bs</span>
 			</div>
-			
+
 			---
 
 			<select class="form-control input-sm form-inline" id="opcion" name="operacion">
 				<option value="">seleccione</option>
 				<optgroup label="Por (%)">
 				<option value="1">Recaudo</option>
-				@if($fondo->real != '0')
-				<option value="2">Descuento</option>
-				@endif
-				</optgroup>
-				<optgroup label="Por (bs)">
-				<option value="3">Recaudo</option>
-				@if($fondo->real != '0')
-				<option value="4">Descuento</option>
-				@endif
 				</optgroup>
 			</select>
 
@@ -56,22 +47,22 @@
 			</div>
 		</div>
 	</th>
-		
-	<th>	
+
+	<th>
 		<div class="input-group">
 			<input type="text" name="" id="importe_fondo" disabled="" class="form-control input-sm" value="0" size="8">
 
 			<span class="input-group-addon">bs</span>
 		</div>
 	</th>
-	<th>	
+	<th>
 		<div class="input-group">
 			<input type="text" name="" id="cuota_fondo" disabled="" class="form-control input-sm" value="0" size="8">
 
 			<span class="input-group-addon">bs</span>
 		</div>
 	</th>
-	
+
 	<th></th>
 </tr>
 
