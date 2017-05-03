@@ -101,24 +101,24 @@
 						@foreach($gastos as $gasto)
 						<tr>
 							<td>{{ $gasto->gasto }}</td>
-							<td>{{ $gasto->pivot->importe }}</td>
-							<td>{{ round($gasto->pivot->importe / 44, 2) }}</td>
+							<td class="text-right">{{ number_format($gasto->pivot->importe, 2, '.', '') }}</td>
+							<td class="text-right">{{ round($gasto->pivot->importe / 44, 2) }}</td>
 						</tr>
 						@endforeach
 
 						@foreach($gastos_extra as $gasto_extra)
 						<tr>
 							<td>{{ $gasto_extra->gasto_extra }}</td>
-							<td>{{ $gasto_extra->pivot->importe }}</td>
-							<td>{{ round($gasto_extra->pivot->importe / 44, 2) }}</td>
+							<td class="text-right">{{ number_format($gasto_extra->pivot->importe, 2, '.', '') }}</td>
+							<td class="text-right">{{ round($gasto_extra->pivot->importe / 44, 2) }}</td>
 						</tr>
 						@endforeach
 					</tbody>
 					<tfoot>
 						<tr>
 							<th class="text-right">SUBTOTAL</th>
-							<th class="info">{{ $recibo->subtotal }}</th>
-							<th class="info">{{ round($recibo->subtotal / 44, 2) }}</th>
+							<th class="info text-right">{{ number_format($recibo->subtotal, 2, '.', '') }}</th>
+							<th class="info text-right">{{ round($recibo->subtotal / 44, 2) }}</th>
 						</tr>
 						<tr>
 							<th class="text-right">FONDO DE RESERVA
@@ -126,23 +126,23 @@
 									{{ ($recibo->operacion == '+') ? 'RECAUDO:' : 'DESCUENTO:' }}
 								@endif
 								{{ ($recibo->porcentaje == '') ? '' : $recibo->porcentaje.'%' }} </th>
-							<th class="info">{{ $recibo->fondo }}</th>
-							<th class="info">{{ round($recibo->fondo / 44, 2) }}</th>
+							<th class="info text-right">{{ number_format($recibo->fondo, 2 ,'.', '') }}</th>
+							<th class="info text-right">{{ round($recibo->fondo / 44, 2) }}</th>
 						</tr>
 
 						@if($propietario->pivot->mora)
 						<tr>
 							<th class="danger text-right">INTERES DE MORA 10%</td>
 								<th></th>
-							<th>{{ round($recibo->cuota * 0.10, 2) }}</th>
+							<th class="text-right">{{ round($recibo->cuota * 0.10, 2) }}</th>
 							</th>
 						</tr>
 						@endif
 
 						<tr class="success total" style="font-size: 12px;">
 							<th class="text-right">TOTAL</th>
-							<th class="success total">{{ $recibo->total  }} </th>
-							<th class="success total">
+							<th class="success total text-right" >{{ number_format($recibo->total, 2, '.', '')  }} </th>
+							<th class="success total text-right">
 							{{ $propietario->pivot->mora ? $recibo->cuota + $recibo->cuota * 0.10 : $recibo->cuota }}
 							</th>
 						</tr>

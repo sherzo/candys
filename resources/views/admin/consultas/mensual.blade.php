@@ -57,40 +57,18 @@
 					<td colspan="2">
 						<h4 class="text-danger">Egreso neto: <strong>{{ $egresos + $egresos_fondo }} bs</strong> </h4>
 					</td>
+					
+				</tr>
+				<tr>
+					<td colspan="4">
+						<div class="h4 text-info">Saldo restante: <strong>{{ $movimientos->last()->saldo }}</strong></div>
+					</td>
 				</tr>
 			</thead>
 		</table><br>
 	</div>
 	</div>
 	@endif
-		<!-- <div class="col-md-3">
-		  <h5 class="text-info">Ingresos: <strong>{{ $ingresos }} bs</strong> </h5>
-		</div>
-
-		<div class="col-md-3">
-		  <h5
-			 class="text-warning">Ingresos fondo de reserva: <strong>{{ $ingresos_fondo }} bs</strong> </h5>
-		</div>
-
-		<div class="col-md-3">
-		  <h5 class="text-danger">Egresos: <strong>{{ $egresos }} bs</strong> </h5>
-		</div>
-
-		<div class="col-md-3">
-		  <h5
-			 class="text-danger">Egresos fondo de reserva: <strong>{{ $egresos_fondo }} bs</strong> </h5>
-		</div> -->
-
-<!-- </div>
-<div class="row">
-		<div class="col-md-6 text-center">
-			<h4 class="text-success">Ingreso neto: <strong>{{ $ingresos + $ingresos_fondo }} bs</strong> </h4>
-		</div>
-
-		<div class="col-md-6 text-center">
-			<h4 class="text-danger">Egresos neto: <strong>{{ $egresos + $egresos_fondo }} bs</strong> </h4>
-		</div>
-</div> -->
 <div class="row">
 	<div class="col-md-12 col-lg-12">
 			<table class="table table-bordered table-hover">

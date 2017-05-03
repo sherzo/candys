@@ -79,14 +79,16 @@
 @section('js')
 <script>
 	$(document).ready(function(){
-		$('#total').change(function(){
-			if(this.is(':chequed'))
-			{
-				alert('chequeado');
-			}else{
-				alert('NO chequeado');
-			}
-		});
+		$("#total").change(function () {
+    		if ($(this).is(':checked')) {
+				$('#monto').prop('disabled', true);
+				$('#monto').val('Se cancelará el total de prestaciones');
+    		}else
+    		{
+				$('#monto').prop('disabled', false);
+				$('#monto').val('');
+    		}
+    	});
 	});
 </script>
 @endsection

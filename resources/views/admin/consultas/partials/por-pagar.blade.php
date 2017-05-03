@@ -58,6 +58,13 @@
                             <input type="text" name="monto" class="form-control" required>
                           </div>
                         </div>
+
+                        <div class="form-group">
+                          <label for="total" class="control-label" title="Realizar el abono con el fondo de reserva" data-toggle="tooltip"> Abonar con el fondo de reserva</label>
+                            <input type="checkbox" name="fondo" title="Realizar el abono con el fondo de reserva" data-toggle="tooltip">
+                        </div>
+
+
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cancerlar</button>
@@ -118,6 +125,11 @@
                             <span class="input-group-addon">Bs.</span>
                             <input type="text" name="monto" class="form-control" required>
                           </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="total" class="control-label" title="REalizar el abono con el fondo de reserva" data-toggle="tooltip"> Abonar con el fondo de reserva</label>
+                            <input type="checkbox" name="fondo" title="Realizar el abono con el fondo de reserva" data-toggle="tooltip">
                         </div>
                     </div>
                     <div class="modal-footer">

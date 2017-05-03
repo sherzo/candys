@@ -99,10 +99,10 @@ class ConsultasController extends Controller
         list($anio, $mes) = explode("-", $request->fecha);
       }
 
-      $movimientos = Movimiento::where('created_at', 'LIKE', '%'.$request->fecha.'%')->get();
+      $movimientos = Movimiento::where('created_at', 'LIKE', '%'.$request->fecha.'%')->orderBy('created_at', 'ASC')->get();
 
 
-      $movimientos_fondo = Movimiento_fondo::where('created_at', 'LIKE', '%'.$request->fecha.'%')->get();
+      $movimientos_fondo = Movimiento_fondo::where('created_at', 'LIKE', '%'.$request->fecha.'%')->orderBy('created_at', 'ASC')->get();
 
       $ingresos = 0;
       $egresos = 0;
@@ -223,7 +223,7 @@ class ConsultasController extends Controller
       }
 
       $pdf = PDF::loadView('admin.consultas.pdf.movimiento', ['movimientos' => $movimientos,
-                                                              'mes' => $mes,
+                                                          'mes' => $mes,
                                                               'anio' => $anio,
                                                               'ingresos' => $ingresos,
                                                               'egresos' => $egresos,
@@ -236,7 +236,68 @@ class ConsultasController extends Controller
 
     public function prestaciones(Request $request)
     {
-      dd($request->all());
+      if ($request->total) {
+
+        $saldo = Saldo::first();
+        $prestaciones = Prestacion::first();
+
+
+        // Si el saldo es menor
+        if ($saldo->saldo < $prestaciones->acumulado) {
+
+          Flash::error('<strong>¡Error!</strong> el saldo actual no es suficiente para cancelar la prestaciones sociales');
+
+          return redirect()->back();
+
+        }else{
+
+          $saldo->saldo = $saldo->saldo - $prestaciones->acumulado;
+          $movimiento = new Movimiento();
+          $movimiento->monto = $prestaciones->acumulado;
+          $movimiento->saldo = $saldo->saldo;
+          $movimiento->transaccion = 'Pago de prestaciones sociales al trabajador residencial';
+          $prestaciones->acumulado = 0;
+          $saldo->save();
+          $prestaciones->save();
+          $movimiento->save();
+
+          Flash::success('<strong>¡Perfecto!</strong> se cancelaron las prestaciones sociales');
+
+          return redirect()->back();
+        }
+
+      }else{
+
+        $saldo = Saldo::first();
+        $prestaciones = Prestacion::first();
+
+        if($saldo->saldo < $request->monto){
+
+          Flash::error('<strong>¡Error!</strong> el saldo actual no es suficiente para cancelar las prestaciones sociales');
+
+          return redirect()->back();
+
+        }else{
+
+          $saldo->saldo = $saldo->saldo - $request->monto;
+          $movimiento = new Movimiento();
+          $movimiento->monto = $request->monto;
+          $movimiento->transaccion = 'Pago de prestaciones sociales al trabajador residencial';
+          $movimiento->saldo = $saldo->saldo;
+          $movimiento->signo = '-';
+          $prestaciones->acumulado = $prestaciones->acumulado - $request->monto; 
+          $saldo->save(); 
+          $prestaciones->save();
+          $movimiento->save();
+
+          Flash::success('<strong>¡Perfecto!</strong> se cancelaron las prestaciones sociales');
+
+          return redirect()->back();
+
+        }
+
+
+      }
     }
 
 }// Clase Controller

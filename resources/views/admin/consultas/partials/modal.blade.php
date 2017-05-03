@@ -98,6 +98,7 @@
               <input type="text" name="monto" class="form-control" required>
             </div>
           </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -116,7 +117,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Pagar prestaciones sociales</h4>
+        <h4 class="modal-title">Cancelar prestaciones sociales</h4>
       </div>
       <div class="modal-body">
           <input type="hidden" name="signo" value="-">
@@ -125,15 +126,15 @@
             <input type="text" name="disponible" disabled id="saldoDisponible" value="{{ $prestaciones->acumulado }} bs" class="form-control">
           </div>
           <div class="form-group">
-            <label for="monto" class="control-label">Monto:</label>
+            <label for="monto" class="control-label">Monto a cancelar:</label>
             <div class="input-group">
               <span class="input-group-addon">Bs.</span>
               <input type="text" name="monto" id="monto" class="form-control" required>
             </div>
           </div>
           <div class="form-group">
-            <label for="total" class="control-label"> Cancelar todo</label>
-              <input type="checkbox" id="total" name="total">
+            <label for="total" class="control-label" title="Con esta opción cancelara el total de prestaciones" data-toggle="tooltip"> Cancelar todo</label>
+              <input type="checkbox" id="total" name="total" title="Con esta opción cancelara el total de prestaciones" data-toggle="tooltip">
           </div>
       </div>
       <div class="modal-footer">

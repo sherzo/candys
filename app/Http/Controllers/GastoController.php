@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Gasto;
 use App\Gasto_extra;
 use App\Movimiento;
+use App\Movimiento_fondo;
+use App\Fondo;
 use App\Saldo;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -64,43 +66,80 @@ class GastoController extends Controller
        $gasto = $request->extra ? Gasto_extra::find($request->gasto_id) : Gasto::find($request->gasto_id);
        $recibo = $gasto->recibos()->where('recibo_id', $request->recibo_id)->first();
 
-       $saldo = Saldo::first();
+      if ($request->fondo) {
 
-       if ($saldo->saldo < $request->monto)
-       {
-          Flash::error('<strong>¡Cuidado!</strong> el monto que desea abonar es mayor al saldo disponible');
+        $fondo = Fondo::first();
+        $monto = $request->monto;
+
+        if ($monto > $fondo->real) {
+
+          Flash::error('<strong>¡Error!</strong> el monto que desea abonar es mayor al fondo de reserva');
+
           return redirect()->back();
 
-       }
+        }
 
-       if ($request->monto > $recibo->pivot->importe)
-       {
-         Flash::error('<strong>¡Cuidado!</strong> el monto que desea abonar es mayor al gasto que desea cancelar');
-         return redirect()->back();
-       }
-
-       if ($request->monto == $recibo->pivot->importe) {
+        if (number_format($monto, 2, '.', '') == $recibo->pivot->importe) {
          $recibo->pivot->estatus = false;
-       }else{
+          }else{
          $recibo->pivot->importe = $recibo->pivot->importe - $request->monto;
-       }
+        }
 
-       $recibo->editar = false;
-       $recibo->save();
-       $recibo->pivot->save();
+        $recibo->editar = false;
+        $recibo->save();
+        $recibo->pivot->save();
 
-       $saldo->saldo = $saldo->saldo - $request->monto;
-       $saldo->save();
-       $movimiento = new Movimiento();
-       $movimiento->transaccion = 'Abono al gasto '.$gasto->gasto.' del mes '.$recibo->mes.' del '.$recibo->anio;
-       $movimiento->monto = $request->monto;
-       $movimiento->signo = '-';
-       $movimiento->saldo = $saldo->saldo;
-       $movimiento->save();
+        $fondo->real = $fondo->real - $monto;
+        $fondo->save();
+        $movimiento = new Movimiento_fondo();
+        $movimiento->transaccion = 'Abono al gasto '.$gasto->gasto.' del mes '.$recibo->mes.' del '.$recibo->anio;
+        $movimiento->monto = $monto;
+        $movimiento->signo = '-';
+        $movimiento->saldo_fondo = $fondo->real;
+        $movimiento->save();
 
        Flash::success('<strong>¡Perfecto!</strong> se abonaron <strong>'.$request->monto.'</strong> bs al gasto');
        return redirect()->back();
+  
+      }else { 
 
+         $saldo = Saldo::first();
+
+         if ($saldo->saldo < $request->monto)
+         {
+            Flash::error('<strong>¡Cuidado!</strong> el monto que desea abonar es mayor al saldo disponible');
+            return redirect()->back();
+
+         }
+
+         if ($request->monto > $recibo->pivot->importe)
+         {
+           Flash::error('<strong>¡Cuidado!</strong> el monto que desea abonar es mayor al gasto que desea cancelar');
+           return redirect()->back();
+         }
+
+         if ($request->monto == $recibo->pivot->importe) {
+           $recibo->pivot->estatus = false;
+         }else{
+           $recibo->pivot->importe = $recibo->pivot->importe - $request->monto;
+         }
+
+         $recibo->editar = false;
+         $recibo->save();
+         $recibo->pivot->save();
+
+         $saldo->saldo = $saldo->saldo - $request->monto;
+         $saldo->save();
+         $movimiento = new Movimiento();
+         $movimiento->transaccion = 'Abono al gasto '.$gasto->gasto.' del mes '.$recibo->mes.' del '.$recibo->anio;
+         $movimiento->monto = $request->monto;
+         $movimiento->signo = '-';
+         $movimiento->saldo = $saldo->saldo;
+         $movimiento->save();
+
+         Flash::success('<strong>¡Perfecto!</strong> se abonaron <strong>'.$request->monto.'</strong> bs al gasto');
+         return redirect()->back();
+      }
      }
 
     /**

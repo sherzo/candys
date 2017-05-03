@@ -95,12 +95,13 @@
       $('[data-toggle="tooltip"]').tooltip();
     });
 
-    $('div.alert').not('.alert-important').delay(4100).fadeOut(350);
+    $('div.alert').not('.alert-important').delay(6000).fadeOut(350);
     </script>
 
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
 
-@yield('js')
+    @yield('js')
+
 </body>
 </html>
